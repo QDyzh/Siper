@@ -11,6 +11,13 @@ import java.util.Map;
 
 public class Util {
 
+    /**
+     * 获取注解获取列名以及值
+     * @param data
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
     public static <T> List<Map<String, Object>> getCommonValueForClass(T data) throws Exception {
         String label;
         Object value;

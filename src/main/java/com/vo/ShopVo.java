@@ -9,8 +9,18 @@ public class ShopVo implements Comparable<ShopVo> {
     private String name;
     @ExcelTitle("星级")
     private String star;
-    @ExcelTitle("地址")
+    @ExcelTitle("区域")
     private String address;
+    @ExcelTitle("详细地址")
+    private String detailAddress;
+    @ExcelTitle("联系电话")
+    private String phone;
+    @ExcelTitle("评价数")
+    private String commentCount;
+    @ExcelTitle("明细地址URL")
+    private String detailUrl;
+    @ExcelTitle("原始描述")
+    private String desc;
 
     public String getName() {
         return name;
@@ -34,6 +44,46 @@ public class ShopVo implements Comparable<ShopVo> {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     @Override
