@@ -1,7 +1,6 @@
 package com.receive;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +35,12 @@ public class Caipiao {
 		params.put("pageNo", String.valueOf(pageNo));
 		try {
 			Map<String, String> headMap = new HashMap<>();
-			headMap.put("Content-Type", "text/json;charset=UTF-8");
-			headMap.put("Transfer-Encoding", "chunked");
-			headMap.put("Cookies", "HMF_CI=30cb596f28235a0b2f090db29d1df338e7aecdd6dcd8c83b2cdab3d7d31ad3e34e");
+			headMap.put("content-Type", "text/json;charset=UTF-8");
+			headMap.put("Connection", "keep-alive");
+			headMap.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36");
+			headMap.put("Cookie", "HMF_CI=dc2cbaa1890e88ce10f384af8e981737b98f8bd9cf96896cf85aa912273c431d72; 21_vq=8");
 			String res = HttpUrlHandler.sendGet(SSQ_URL, "UTF-8", params, headMap);
+			System.out.println("respone message is " + res);
 			if (StrUtil.isNotEmpty(res)) {
 				Map<String, Object> map = JsonToTypeReference.jsonToMap(res);
 				if (map.get("state") != null && (int)map.get("state") == 0) {
@@ -70,7 +71,7 @@ public class Caipiao {
 	 */
 	public static void main(String[] args) {
 		List<Map<String, Object>> list = new ArrayList<>();
-		new Caipiao().requestSsq("2010-01-01", "2022-01-31", 1, list);
+		new Caipiao().requestSsq("2021-01-01", "2022-01-31", 1, list);
 		System.out.println(list.size());
 //		for (Map<String, Object> m : list) {
 //			System.out.println(m);
