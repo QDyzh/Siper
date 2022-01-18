@@ -1,11 +1,17 @@
 package com.receive;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.excepiton.CaiPiaoException;
+import com.jdbc.MysqlUtil;
+import com.mapper.HistoryRecordMapper;
+import com.model.HistoryRecord;
 
 import top.sumhzehn.http.HttpUrlHandler;
 import top.sumhzehn.json.JsonToTypeReference;
@@ -65,16 +71,49 @@ public class Caipiao {
 		}
 	}
 	
+	private void insertList(List<HistoryRecord> list) {
+		SqlSession session = MysqlUtil.openSqlSession();
+		try {
+			HistoryRecordMapper mapper = session.getMapper(HistoryRecordMapper.class);
+			mapper.insertList(list);
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+	
 	/**
 	 * 	本地测试
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Caipiao c = new Caipiao();
 		List<Map<String, Object>> list = new ArrayList<>();
-		new Caipiao().requestSsq("2021-01-01", "2022-01-31", 1, list);
-		System.out.println(list.size());
-//		for (Map<String, Object> m : list) {
-//			System.out.println(m);
-//		}
+//		c.requestSsq("2021-01-01", "2022-01-31", 1, list);
+//		c.requestSsq("2019-01-01", "2021-01-01", 1, list);
+//		c.requestSsq("2017-01-01", "2019-01-01", 1, list);
+//		c.requestSsq("2015-01-01", "2017-01-01", 1, list);
+//		c.requestSsq("2010-01-01", "2015-01-01", 1, list);
+		System.out.println("返回条数 size: " + list.size());
+		List<HistoryRecord> records = new ArrayList<>();
+		HistoryRecord record;
+		for (Map<String, Object> m : list) {
+			record = new HistoryRecord();
+			record.setName(String.valueOf(m.get("name")));
+			record.setCode(String.valueOf(m.get("code")));
+			record.setDate(String.valueOf(m.get("date")));
+			record.setWeek(String.valueOf(m.get("week")));
+			record.setRed(String.valueOf(m.get("red")));
+			record.setBlue(String.valueOf(m.get("blue")));
+			record.setBlue2(String.valueOf(m.get("blue2")));
+			record.setSales(String.valueOf(m.get("sales")));
+			record.setPoolmoney(String.valueOf(m.get("poolmoney")));
+			record.setContent(String.valueOf(m.get("content")));
+			record.setCreateTime(new Date());
+//			record.setMsg(JsonToTypeReference.objectToJson(list).getBytes());
+			records.add(record);
+		}
+		c.insertList(records);
+		System.out.println("执行完成！");
 	}
 }
